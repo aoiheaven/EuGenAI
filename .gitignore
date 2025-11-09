@@ -59,7 +59,9 @@ data/processed/
 .env
 config/secrets.yaml
 
-# Chinese backup documentation (excluded from commits)
-*_zh.md
+# Chinese backup documentation (local only, not in remote)
+README_zh.md
+demo_visualizations/*_zh.md
+demo_multi_lesion_visualizations/*_zh.md
 docs/zh/
 
