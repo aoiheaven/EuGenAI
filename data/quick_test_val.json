@@ -1,0 +1,130 @@
+{
+  "dataset_info": {
+    "name": "quick_test_val",
+    "version": "1.0",
+    "description": "Quick test validation dataset",
+    "total_samples": 5
+  },
+  "samples": [
+    {
+      "sample_id": "VAL_0000",
+      "image": {
+        "path": "data/images/quick_test/val_0000.jpg",
+        "modality": "fundus_photography",
+        "eye": "OD",
+        "resolution": [
+          224,
+          224
+        ]
+      },
+      "medical_record": {
+        "age": 49,
+        "gender": "M",
+        "history": "Patient 0: Type 2 diabetes mellitus for 9 years. Vision changes reported over past 6 months.",
+        "physical_exam": "Visual acuity 20/40. Intraocular pressure: 13 mmHg.",
+        "lab_results": "HbA1c: 7.8%, Fasting glucose: 117 mg/dL"
+      },
+      "diagnosis": {
+        "primary": "Moderate NPDR",
+        "confidence": 0.9168890359771795,
+        "icd10": "E11.3492"
+      }
+    },
+    {
+      "sample_id": "VAL_0001",
+      "image": {
+        "path": "data/images/quick_test/val_0001.jpg",
+        "modality": "fundus_photography",
+        "eye": "OS",
+        "resolution": [
+          224,
+          224
+        ]
+      },
+      "medical_record": {
+        "age": 56,
+        "gender": "F",
+        "history": "Patient 1: Type 2 diabetes mellitus for 17 years. Vision changes reported over past 3 months.",
+        "physical_exam": "Visual acuity 20/40. Intraocular pressure: 14 mmHg.",
+        "lab_results": "HbA1c: 7.2%, Fasting glucose: 168 mg/dL"
+      },
+      "diagnosis": {
+        "primary": "Moderate NPDR",
+        "confidence": 0.943714126254352,
+        "icd10": "E11.3492"
+      }
+    },
+    {
+      "sample_id": "VAL_0002",
+      "image": {
+        "path": "data/images/quick_test/val_0002.jpg",
+        "modality": "fundus_photography",
+        "eye": "OD",
+        "resolution": [
+          224,
+          224
+        ]
+      },
+      "medical_record": {
+        "age": 78,
+        "gender": "M",
+        "history": "Patient 2: Type 2 diabetes mellitus for 20 years. Vision changes reported over past 11 months.",
+        "physical_exam": "Visual acuity 20/30. Intraocular pressure: 13 mmHg.",
+        "lab_results": "HbA1c: 7.4%, Fasting glucose: 130 mg/dL"
+      },
+      "diagnosis": {
+        "primary": "Mild NPDR",
+        "confidence": 0.9841578852799272,
+        "icd10": "E11.3491"
+      }
+    },
+    {
+      "sample_id": "VAL_0003",
+      "image": {
+        "path": "data/images/quick_test/val_0003.jpg",
+        "modality": "fundus_photography",
+        "eye": "OS",
+        "resolution": [
+          224,
+          224
+        ]
+      },
+      "medical_record": {
+        "age": 45,
+        "gender": "F",
+        "history": "Patient 3: Type 2 diabetes mellitus for 14 years. Vision changes reported over past 6 months.",
+        "physical_exam": "Visual acuity 20/60. Intraocular pressure: 13 mmHg.",
+        "lab_results": "HbA1c: 10.0%, Fasting glucose: 120 mg/dL"
+      },
+      "diagnosis": {
+        "primary": "Severe NPDR",
+        "confidence": 0.9316442196078398,
+        "icd10": "E11.3493"
+      }
+    },
+    {
+      "sample_id": "VAL_0004",
+      "image": {
+        "path": "data/images/quick_test/val_0004.jpg",
+        "modality": "fundus_photography",
+        "eye": "OD",
+        "resolution": [
+          224,
+          224
+        ]
+      },
+      "medical_record": {
+        "age": 80,
+        "gender": "M",
+        "history": "Patient 4: Type 2 diabetes mellitus for 14 years. Vision changes reported over past 7 months.",
+        "physical_exam": "Visual acuity 20/40. Intraocular pressure: 17 mmHg.",
+        "lab_results": "HbA1c: 6.4%, Fasting glucose: 112 mg/dL"
+      },
+      "diagnosis": {
+        "primary": "Moderate NPDR",
+        "confidence": 0.9770323602653191,
+        "icd10": "E11.3492"
+      }
+    }
+  ]
+}
