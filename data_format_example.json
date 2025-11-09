@@ -1,0 +1,166 @@
+{
+  "dataset_info": {
+    "name": "Medical Multimodal Chain-of-Thought Dataset",
+    "version": "1.0",
+    "description": "包含图像、病历文本、思维链推理过程和结论的医学数据集"
+  },
+  "samples": [
+    {
+      "sample_id": "MED_001",
+      "patient_info": {
+        "age": 65,
+        "gender": "M",
+        "chief_complaint": "持续性胸痛3天"
+      },
+      "image": {
+        "path": "images/MED_001.jpg",
+        "modality": "CT",
+        "body_part": "chest",
+        "metadata": {
+          "resolution": [512, 512],
+          "spacing": [0.5, 0.5, 2.5],
+          "acquisition_date": "2024-10-15"
+        }
+      },
+      "medical_record": {
+        "history": "患者既往有高血压病史10年，规律服药控制。近3天出现持续性胸痛，伴有呼吸困难。",
+        "physical_exam": "血压150/95mmHg，心率92次/分，呼吸20次/分。",
+        "lab_results": "心肌酶谱：肌钙蛋白I 0.8 ng/ml (正常<0.04)"
+      },
+      "chain_of_thought": {
+        "reasoning_steps": [
+          {
+            "step": 1,
+            "action": "观察影像整体",
+            "observation": "胸部CT显示心影增大，肺野清晰",
+            "region_of_interest": {
+              "bbox": [120, 150, 380, 420],
+              "description": "心脏区域"
+            }
+          },
+          {
+            "step": 2,
+            "action": "关注异常区域",
+            "observation": "左心室壁增厚，心包少量积液",
+            "region_of_interest": {
+              "bbox": [180, 200, 320, 380],
+              "description": "左心室及心包"
+            },
+            "reference_text": "结合肌钙蛋白升高，提示心肌损伤"
+          },
+          {
+            "step": 3,
+            "action": "综合分析",
+            "observation": "影像学表现结合临床症状和实验室检查",
+            "reasoning": "持续胸痛 + 心肌酶升高 + 影像学异常 → 考虑急性心肌梗死可能性大",
+            "supporting_evidence": [
+              "肌钙蛋白I显著升高(0.8 ng/ml)",
+              "CT示左心室壁异常",
+              "临床症状典型"
+            ]
+          }
+        ],
+        "intermediate_conclusions": [
+          "影像学发现心脏结构异常",
+          "实验室检查支持心肌损伤",
+          "临床表现符合急性冠脉综合征"
+        ]
+      },
+      "final_diagnosis": {
+        "primary": "急性心肌梗死",
+        "secondary": ["高血压病", "心包积液"],
+        "confidence": 0.92,
+        "urgency": "紧急",
+        "recommendations": [
+          "立即行冠脉造影检查",
+          "启动急性心梗治疗流程",
+          "心内科会诊"
+        ]
+      },
+      "ground_truth": {
+        "diagnosis": "急性心肌梗死",
+        "verified_by": "主任医师张XX",
+        "verification_date": "2024-10-15"
+      }
+    },
+    {
+      "sample_id": "MED_002",
+      "patient_info": {
+        "age": 45,
+        "gender": "F",
+        "chief_complaint": "右上腹疼痛伴发热2天"
+      },
+      "image": {
+        "path": "images/MED_002.jpg",
+        "modality": "Ultrasound",
+        "body_part": "abdomen",
+        "metadata": {
+          "resolution": [640, 480],
+          "acquisition_date": "2024-10-16"
+        }
+      },
+      "medical_record": {
+        "history": "患者2天前进食油腻食物后出现右上腹疼痛，阵发性加剧，伴恶心呕吐，发热最高38.5℃。",
+        "physical_exam": "体温38.3℃，右上腹压痛明显，Murphy征阳性。",
+        "lab_results": "白细胞 13.5×10^9/L, 中性粒细胞 82%, CRP 45 mg/L"
+      },
+      "chain_of_thought": {
+        "reasoning_steps": [
+          {
+            "step": 1,
+            "action": "定位病变器官",
+            "observation": "超声显示胆囊区域异常",
+            "region_of_interest": {
+              "bbox": [200, 150, 450, 350],
+              "description": "胆囊及周围组织"
+            }
+          },
+          {
+            "step": 2,
+            "action": "分析影像特征",
+            "observation": "胆囊壁增厚达5mm，囊内可见多发强回声团伴声影",
+            "region_of_interest": {
+              "bbox": [250, 180, 380, 300],
+              "description": "胆囊壁和结石"
+            },
+            "reference_text": "胆囊壁增厚>3mm提示炎症，强回声团伴声影符合结石表现"
+          },
+          {
+            "step": 3,
+            "action": "关联临床表现",
+            "observation": "Murphy征阳性 + 发热 + 白细胞升高",
+            "reasoning": "影像学结石 + 炎症表现 + 典型临床症状 → 急性胆囊炎诊断明确",
+            "supporting_evidence": [
+              "胆囊壁显著增厚",
+              "胆囊结石存在",
+              "炎症指标升高",
+              "典型的Murphy征"
+            ]
+          }
+        ],
+        "intermediate_conclusions": [
+          "超声确认胆囊结石",
+          "胆囊壁增厚提示急性炎症",
+          "实验室检查支持感染诊断"
+        ]
+      },
+      "final_diagnosis": {
+        "primary": "急性胆囊炎",
+        "secondary": ["胆囊多发结石"],
+        "confidence": 0.95,
+        "urgency": "较紧急",
+        "recommendations": [
+          "禁食禁水",
+          "抗感染治疗",
+          "普外科会诊评估手术指征"
+        ]
+      },
+      "ground_truth": {
+        "diagnosis": "急性胆囊炎伴胆囊结石",
+        "verified_by": "主任医师李XX",
+        "verification_date": "2024-10-16"
+      }
+    }
+  ]
+}
+

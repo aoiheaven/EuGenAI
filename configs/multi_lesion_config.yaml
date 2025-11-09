@@ -1,0 +1,130 @@
+# Multi-Lesion Configuration for Medical Multimodal Chain-of-Thought
+
+# Model Configuration (Enhanced)
+model:
+  image_encoder_name: "vit_base_patch16_224"
+  text_encoder_name: "bert-base-uncased"
+  img_size: 512
+  hidden_dim: 768
+  num_cot_steps: 10
+  num_heads: 8
+  num_decoder_layers: 3
+  dropout: 0.1
+  num_diagnosis_classes: 100
+  
+  # Multi-lesion specific
+  num_lesion_types: 20  # Types of lesions (e.g., nodule, mass, consolidation, etc.)
+  max_num_images: 3  # Support up to 3 images per sample
+  image_fusion_method: "attention"  # 'attention', 'concat', or 'average'
+  enable_segmentation: true  # Enable pixel-level segmentation
+
+# Dataset Configuration
+dataset:
+  data_root: "data"
+  train_file: "data/train_multi_lesion.json"
+  val_file: "data/val_multi_lesion.json"
+  test_file: "data/test_multi_lesion.json"
+  image_size: 512
+  max_text_length: 512
+  max_cot_steps: 10
+  max_num_images: 3
+  max_lesions_per_sample: 10  # Maximum lesions per image
+  load_segmentation_masks: true
+  augment_train: true
+  augment_val: false
+
+# Training Configuration
+training:
+  batch_size: 2  # Smaller batch for multi-lesion (memory intensive)
+  num_epochs: 150
+  learning_rate: 5.0e-5  # Lower LR for multi-task
+  weight_decay: 1.0e-5
+  warmup_epochs: 10
+  gradient_clip: 1.0
+  
+  # Optimizer
+  optimizer: "adamw"
+  betas: [0.9, 0.999]
+  
+  # Scheduler
+  scheduler: "cosine"
+  min_lr: 1.0e-7
+  
+  # Multi-task loss weights
+  loss_weights:
+    segmentation: 2.0  # Segmentation loss
+    lesion_diagnosis: 1.5  # Per-lesion classification
+    global_diagnosis: 1.0  # Global diagnosis
+    lesion_confidence: 0.5  # Per-lesion confidence
+    global_confidence: 0.5  # Global confidence
+    reasoning: 0.3  # Reasoning consistency
+
+# Validation Configuration
+validation:
+  val_interval: 1
+  save_best: true
+  metric: "dice_score"  # Primary metric for multi-lesion (changed from accuracy)
+  compute_per_lesion_metrics: true
+
+# Evaluation Configuration
+evaluation:
+  # Segmentation metrics
+  compute_dice: true
+  compute_iou: true
+  compute_hausdorff: true
+  
+  # Detection metrics
+  iou_threshold: 0.5  # For lesion detection
+  
+  # Attention metrics
+  compute_attention_overlap: true
+  compute_pointing_game: true
+  
+  # Per-lesion evaluation
+  evaluate_per_lesion: true
+  lesion_size_bins: [small, medium, large]  # Stratify by size
+
+# Logging Configuration
+logging:
+  log_dir: "logs_multi_lesion"
+  tensorboard: true
+  wandb: false
+  wandb_project: "medical-multi-lesion-cot"
+  log_interval: 10
+  
+  # Log per-lesion statistics
+  log_per_lesion_stats: true
+  log_segmentation_examples: true
+  num_visualization_samples: 5
+
+# Checkpoint Configuration
+checkpoint:
+  save_dir: "checkpoints_multi_lesion"
+  save_interval: 5
+  keep_last_n: 3
+  save_segmentation_visualizations: true
+
+# Hardware Configuration
+hardware:
+  device: "cuda"
+  num_workers: 4
+  pin_memory: true
+  mixed_precision: true
+
+# Multi-lesion specific settings
+multi_lesion:
+  # Lesion filtering
+  min_lesion_area: 100  # Minimum pixels for a valid lesion
+  max_lesion_area: 50000  # Maximum pixels
+  
+  # Post-processing
+  use_nms: true  # Non-maximum suppression for overlapping detections
+  nms_iou_threshold: 0.3
+  
+  # Visualization
+  show_individual_lesions: true
+  color_by_severity: true
+
+# Reproducibility
+seed: 42
+

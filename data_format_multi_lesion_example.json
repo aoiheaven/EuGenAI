@@ -1,0 +1,346 @@
+{
+  "dataset_info": {
+    "name": "Medical Multimodal Multi-Lesion Dataset",
+    "version": "2.0",
+    "description": "Enhanced dataset supporting multiple lesions and multiple images with segmentation"
+  },
+  "samples": [
+    {
+      "sample_id": "ML_001",
+      "patient_info": {
+        "age": 68,
+        "gender": "F",
+        "chief_complaint": "Chronic cough and weight loss for 2 months"
+      },
+      "image": {
+        "paths": [
+          "images/ML_001_chest_ct.jpg",
+          "images/ML_001_chest_ct_contrast.jpg"
+        ],
+        "modality": "CT",
+        "body_part": "chest",
+        "sequences": ["non-contrast", "post-contrast"],
+        "metadata": {
+          "resolution": [512, 512],
+          "spacing": [0.7, 0.7, 2.0],
+          "acquisition_date": "2024-11-01"
+        }
+      },
+      "lesions": [
+        {
+          "lesion_id": 1,
+          "type": "nodule",
+          "bbox": [180, 220, 280, 320],
+          "segmentation_mask": "masks/ML_001_lesion_1.npy",
+          "severity": "moderate",
+          "size_mm": 18.5,
+          "location": "Right upper lobe",
+          "description": "Spiculated nodule, 18mm diameter, concerning for malignancy",
+          "confidence": 0.88
+        },
+        {
+          "lesion_id": 2,
+          "type": "nodule",
+          "bbox": [320, 280, 380, 340],
+          "segmentation_mask": "masks/ML_001_lesion_2.npy",
+          "severity": "mild",
+          "size_mm": 8.2,
+          "location": "Right lower lobe",
+          "description": "Small nodule, well-defined margins, likely benign",
+          "confidence": 0.75
+        },
+        {
+          "lesion_id": 3,
+          "type": "consolidation",
+          "bbox": [140, 340, 220, 420],
+          "segmentation_mask": "masks/ML_001_lesion_3.npy",
+          "severity": "mild",
+          "size_mm": 25.0,
+          "location": "Left lower lobe",
+          "description": "Small area of consolidation, possibly inflammatory",
+          "confidence": 0.82
+        }
+      ],
+      "medical_record": {
+        "history": "Patient is a 68-year-old female with 40 pack-year smoking history. Progressive dyspnea and hemoptysis over past 2 months. 10 kg weight loss.",
+        "physical_exam": "Decreased breath sounds in right upper chest. No clubbing. Vital signs stable.",
+        "lab_results": "WBC 8.5, Hgb 11.2 (mild anemia), Tumor markers: CEA elevated at 12.3 ng/ml"
+      },
+      "chain_of_thought": {
+        "reasoning_steps": [
+          {
+            "step": 1,
+            "lesion_id": null,
+            "action": "Survey bilateral lung fields",
+            "observation": "Multiple nodular opacities noted in both lungs, right predominant",
+            "region_of_interest": {
+              "bbox": [100, 180, 450, 450],
+              "description": "Bilateral lung fields"
+            },
+            "attention_weight": 0.72
+          },
+          {
+            "step": 2,
+            "lesion_id": 1,
+            "action": "Examine largest right upper lobe nodule",
+            "observation": "18mm spiculated nodule with irregular margins",
+            "region_of_interest": {
+              "bbox": [180, 220, 280, 320],
+              "description": "Right upper lobe nodule"
+            },
+            "reference_text": "Spiculation and size >15mm raises concern for primary lung cancer",
+            "reasoning": "Irregular margins, spiculation, patient's smoking history and symptoms strongly suggest malignancy",
+            "attention_weight": 0.95
+          },
+          {
+            "step": 3,
+            "lesion_id": 2,
+            "action": "Evaluate smaller right lower lobe nodule",
+            "observation": "8mm smooth nodule with well-defined margins",
+            "region_of_interest": {
+              "bbox": [320, 280, 380, 340],
+              "description": "Right lower lobe nodule"
+            },
+            "reference_text": "Size <10mm with smooth margins more consistent with benign etiology or satellite lesion",
+            "reasoning": "Could be satellite metastasis given larger lesion, or benign granuloma",
+            "attention_weight": 0.68
+          },
+          {
+            "step": 4,
+            "lesion_id": 3,
+            "action": "Assess left lower lobe opacity",
+            "observation": "Area of consolidation, air bronchograms present",
+            "region_of_interest": {
+              "bbox": [140, 340, 220, 420],
+              "description": "Left lower lobe"
+            },
+            "reference_text": "Air bronchograms suggest patent airways, more consistent with inflammatory process",
+            "reasoning": "Likely post-obstructive pneumonia or concurrent infection",
+            "attention_weight": 0.71
+          },
+          {
+            "step": 5,
+            "action": "Correlate imaging with clinical presentation",
+            "observation": "Multiple findings: dominant spiculated mass, satellite nodule, and consolidation",
+            "reasoning": "Combination of dominant malignant-appearing mass with satellite lesion and post-obstructive changes",
+            "supporting_evidence": [
+              "Smoking history (40 pack-years)",
+              "Constitutional symptoms (weight loss, hemoptysis)",
+              "Elevated CEA (tumor marker)",
+              "Imaging: spiculated 18mm mass with satellites"
+            ],
+            "attention_weight": 0.89
+          }
+        ],
+        "intermediate_conclusions": [
+          "Multiple pulmonary nodules identified, right predominant",
+          "Largest lesion demonstrates malignant features",
+          "Smaller lesions may represent satellite metastases",
+          "Left lower lobe consolidation likely post-obstructive"
+        ]
+      },
+      "lesion_diagnoses": [
+        {
+          "lesion_id": 1,
+          "diagnosis": "Suspected lung cancer (primary)",
+          "malignancy_risk": "high",
+          "confidence": 0.92
+        },
+        {
+          "lesion_id": 2,
+          "diagnosis": "Satellite nodule vs benign",
+          "malignancy_risk": "moderate",
+          "confidence": 0.68
+        },
+        {
+          "lesion_id": 3,
+          "diagnosis": "Post-obstructive pneumonia",
+          "malignancy_risk": "low",
+          "confidence": 0.85
+        }
+      ],
+      "final_diagnosis": {
+        "primary": "Suspected lung cancer (T2N0M0, stage IB) with satellite lesions",
+        "secondary": [
+          "Post-obstructive pneumonia",
+          "Multiple pulmonary nodules"
+        ],
+        "confidence": 0.89,
+        "urgency": "urgent",
+        "recommendations": [
+          "PET-CT for staging",
+          "Tissue biopsy (CT-guided or bronchoscopy)",
+          "Pulmonary oncology consult",
+          "Treat concurrent pneumonia"
+        ]
+      },
+      "ground_truth": {
+        "diagnosis": "Adenocarcinoma of lung, stage IB",
+        "verified_by": "Pathology + MDT",
+        "verification_date": "2024-11-05"
+      }
+    },
+    {
+      "sample_id": "ML_002",
+      "patient_info": {
+        "age": 52,
+        "gender": "M",
+        "chief_complaint": "Headache and focal neurological signs"
+      },
+      "image": {
+        "paths": [
+          "images/ML_002_brain_t1.jpg",
+          "images/ML_002_brain_t2.jpg",
+          "images/ML_002_brain_flair.jpg"
+        ],
+        "modality": "MRI",
+        "body_part": "brain",
+        "sequences": ["T1-weighted", "T2-weighted", "FLAIR"],
+        "metadata": {
+          "resolution": [512, 512],
+          "field_strength": "3T",
+          "acquisition_date": "2024-11-02"
+        }
+      },
+      "lesions": [
+        {
+          "lesion_id": 1,
+          "type": "mass",
+          "bbox": [220, 180, 340, 300],
+          "segmentation_mask": "masks/ML_002_lesion_1.npy",
+          "severity": "severe",
+          "size_mm": 42.0,
+          "location": "Right frontal lobe",
+          "description": "Large heterogeneous mass with surrounding edema and mass effect",
+          "characteristics": {
+            "t1_signal": "hypointense",
+            "t2_signal": "hyperintense",
+            "enhancement": "heterogeneous ring enhancement",
+            "edema": "significant perilesional edema"
+          },
+          "confidence": 0.94
+        },
+        {
+          "lesion_id": 2,
+          "type": "edema",
+          "bbox": [180, 150, 380, 340],
+          "segmentation_mask": "masks/ML_002_lesion_2.npy",
+          "severity": "moderate",
+          "size_mm": 80.0,
+          "location": "Right frontal lobe (perilesional)",
+          "description": "Extensive vasogenic edema surrounding mass",
+          "confidence": 0.91
+        }
+      ],
+      "medical_record": {
+        "history": "Progressive headaches for 3 weeks, now with right-sided weakness and speech difficulty. No prior malignancy. No trauma.",
+        "physical_exam": "Alert but dysarthric. Right hemiparesis 4/5 strength. Positive Babinski on right. No papilledema.",
+        "lab_results": "Normal CBC and metabolic panel. No evidence of systemic infection."
+      },
+      "chain_of_thought": {
+        "reasoning_steps": [
+          {
+            "step": 1,
+            "lesion_id": null,
+            "action": "Review all MRI sequences",
+            "observation": "Large space-occupying lesion in right frontal lobe visible on all sequences",
+            "region_of_interest": {
+              "bbox": [150, 120, 400, 360],
+              "description": "Right cerebral hemisphere"
+            },
+            "attention_weight": 0.78
+          },
+          {
+            "step": 2,
+            "lesion_id": 1,
+            "action": "Analyze primary mass characteristics",
+            "observation": "42mm heterogeneous mass with ring enhancement and central necrosis",
+            "region_of_interest": {
+              "bbox": [220, 180, 340, 300],
+              "description": "Primary mass"
+            },
+            "reference_text": "Ring enhancement with necrosis is classic for high-grade glioma or metastasis",
+            "reasoning": "Imaging features consistent with glioblastoma multiforme",
+            "attention_weight": 0.96
+          },
+          {
+            "step": 3,
+            "lesion_id": 2,
+            "action": "Assess perilesional changes",
+            "observation": "Extensive FLAIR hyperintense signal surrounding mass",
+            "region_of_interest": {
+              "bbox": [180, 150, 380, 340],
+              "description": "Perilesional region"
+            },
+            "reference_text": "FLAIR hyperintensity indicates vasogenic edema",
+            "reasoning": "Significant edema causing mass effect and midline shift, explains focal neurological deficits",
+            "attention_weight": 0.85
+          },
+          {
+            "step": 4,
+            "action": "Evaluate for additional lesions",
+            "observation": "No other enhancing lesions identified in remaining brain parenchyma",
+            "reasoning": "Single lesion favors primary brain tumor over metastatic disease",
+            "attention_weight": 0.62
+          },
+          {
+            "step": 5,
+            "action": "Correlate with clinical presentation",
+            "observation": "Mass location explains right-sided weakness and speech difficulty",
+            "reasoning": "Left frontal lobe involvement affecting motor cortex and Broca's area. Rapid progression over 3 weeks consistent with high-grade tumor",
+            "supporting_evidence": [
+              "Rapid symptom progression (3 weeks)",
+              "Focal neurological deficits matching lesion location",
+              "Significant mass effect and edema",
+              "Imaging features of high-grade glioma"
+            ],
+            "attention_weight": 0.91
+          }
+        ],
+        "intermediate_conclusions": [
+          "Large intra-axial mass in right frontal lobe",
+          "Imaging characteristics consistent with high-grade glioma",
+          "Significant mass effect with edema",
+          "No evidence of multifocal disease"
+        ]
+      },
+      "lesion_diagnoses": [
+        {
+          "lesion_id": 1,
+          "diagnosis": "Glioblastoma multiforme (WHO grade IV)",
+          "malignancy_risk": "high",
+          "confidence": 0.94
+        },
+        {
+          "lesion_id": 2,
+          "diagnosis": "Vasogenic edema (secondary to mass)",
+          "malignancy_risk": "na",
+          "confidence": 0.96
+        }
+      ],
+      "final_diagnosis": {
+        "primary": "Glioblastoma multiforme, right frontal lobe",
+        "secondary": [
+          "Significant perilesional edema with mass effect",
+          "Secondary right hemiparesis",
+          "Expressive aphasia"
+        ],
+        "confidence": 0.93,
+        "urgency": "urgent",
+        "recommendations": [
+          "Neurosurgery consult for resection planning",
+          "Start dexamethasone for edema management",
+          "Antiepileptic prophylaxis",
+          "MRI spectroscopy for confirmation",
+          "Neuro-oncology referral"
+        ]
+      },
+      "ground_truth": {
+        "diagnosis": "Glioblastoma multiforme (confirmed by histopathology)",
+        "verified_by": "Neuropathology",
+        "verification_date": "2024-11-08"
+      }
+    }
+  ]
+}
+

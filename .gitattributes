@@ -1,0 +1,35 @@
+# Git attributes for proper language detection and line endings
+
+# Source code
+*.py text eol=lf
+*.sh text eol=lf
+
+# Documentation
+*.md text eol=lf
+*.txt text eol=lf
+
+# Configuration
+*.yaml text eol=lf
+*.yml text eol=lf
+*.json text eol=lf
+*.toml text eol=lf
+
+# Data files (binary)
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.nii binary
+*.nii.gz binary
+*.dcm binary
+*.mha binary
+
+# Model checkpoints (binary)
+*.pth binary
+*.pt binary
+*.ckpt binary
+
+# Archives (binary)
+*.zip binary
+*.tar binary
+*.gz binary
+

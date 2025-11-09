@@ -1,0 +1,114 @@
+[project]
+name = "eugenai"
+version = "2.0.0"
+description = "EuGenAI: Eye Ultra-intelligent Generative AI - Multimodal Chain-of-Thought Framework for Ophthalmic Diagnosis"
+authors = [
+    {name = "aoiheaven", email = "aoiheaven@github.com"}
+]
+readme = "README.md"
+requires-python = ">=3.9"
+license = {file = "LICENSE"}
+keywords = ["ophthalmology", "retinal imaging", "medical imaging", "transformer", "chain-of-thought", "multimodal", "explainable-ai", "deep learning"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Healthcare Industry",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: Medical Science Apps.",
+    "Topic :: Scientific/Engineering :: Image Recognition",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+
+dependencies = [
+    # Core Deep Learning
+    "torch>=2.0.0",
+    "torchvision>=0.15.0",
+    "transformers>=4.30.0",
+    "timm>=0.9.0",
+    
+    # Computer Vision
+    "opencv-python>=4.8.0",
+    "pillow>=10.0.0",
+    "albumentations>=1.3.0",
+    
+    # NLP
+    "tokenizers>=0.13.0",
+    "sentencepiece>=0.1.99",
+    
+    # Medical Image Processing
+    "pydicom>=2.4.0",
+    "nibabel>=5.1.0",
+    "SimpleITK>=2.3.0",
+    
+    # Data Processing
+    "numpy>=1.24.0",
+    "pandas>=2.0.0",
+    "scikit-learn>=1.3.0",
+    "scipy>=1.11.0",
+    
+    # Visualization
+    "matplotlib>=3.7.0",
+    "seaborn>=0.12.0",
+    "plotly>=5.14.0",
+    "grad-cam>=1.4.0",
+    
+    # Training Utils
+    "tensorboard>=2.13.0",
+    "wandb>=0.15.0",
+    "tqdm>=4.65.0",
+    "pyyaml>=6.0",
+    
+    # Evaluation
+    "scikit-image>=0.21.0",
+    "lpips>=0.1.4",
+    
+    # Configuration
+    "hydra-core>=1.3.0",
+    "omegaconf>=2.3.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0",
+    "black>=23.0.0",
+    "flake8>=6.0.0",
+    "mypy>=1.5.0",
+    "isort>=5.12.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/aoiheaven/EuGenAI"
+Repository = "https://github.com/aoiheaven/EuGenAI"
+Documentation = "https://github.com/aoiheaven/EuGenAI#readme"
+"Bug Tracker" = "https://github.com/aoiheaven/EuGenAI/issues"
+
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["src"]
+
+[tool.black]
+line-length = 100
+target-version = ['py39', 'py310', 'py311']
+include = '\.pyi?$'
+
+[tool.isort]
+profile = "black"
+line_length = 100
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+addopts = "-v --cov=src --cov-report=html --cov-report=term"
+

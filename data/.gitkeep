@@ -1,0 +1,6 @@
+# This directory will contain your training data
+# Place your JSON files here:
+# - train.json or train_multi_lesion.json
+# - val.json or val_multi_lesion.json  
+# - test.json or test_multi_lesion.json
+
