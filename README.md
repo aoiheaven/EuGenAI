@@ -11,7 +11,7 @@
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0%2B-orange.svg)](https://pytorch.org/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-[中文文档](README_zh.md) | [Quick Start](QUICKSTART.md) | [Roadmap](ROADMAP.md) | [Features](FEATURES.md)
+[Quick Start](QUICKSTART.md) | [Roadmap](ROADMAP.md) | [Features](FEATURES.md)
 
 ---
 
@@ -249,8 +249,7 @@ medical-multimodal-cot/
 ├── data_format_example.json      # Data format specification
 ├── pyproject.toml                # Project dependencies (uv)
 ├── LICENSE                       # License file
-├── README.md                     # This file
-└── README_zh.md                  # Chinese documentation
+└── README.md                     # This file
 ```
 
 ## 👁️ Ophthalmic Applications
@@ -575,7 +574,6 @@ We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guid
 - **[Roadmap](ROADMAP.md)** - Development plans and timeline
 - **[Progressive Training Pipeline](docs/training_pipeline.md)** - Self-supervised & RL training guide
 - **[SSL & RL Implementation](docs/SSL_RL_IMPLEMENTATION.md)** - Technical details
-- **[中文文档](README_zh.md)** - Complete Chinese documentation
 - **[Multi-Lesion Guide](demo_multi_lesion_visualizations/README.md)** - Multi-lesion visualization guide
 
 ## 💡 Progressive Training: From Zero to Expert
