@@ -28,6 +28,20 @@
         "primary": "Mild NPDR",
         "confidence": 0.9341451399380615,
         "icd10": "E11.3491"
+      },
+      "chain_of_thought": {
+        "reasoning_steps": [
+          {
+            "step": 1,
+            "action": "Assess image",
+            "observation": "Image observed"
+          }
+        ]
+      },
+      "final_diagnosis": {
+        "primary": "Mild NPDR",
+        "confidence": 0.9341451399380615,
+        "icd10": "E11.3491"
       }
     },
     {
@@ -49,6 +63,20 @@
         "lab_results": "HbA1c: 8.4%, Fasting glucose: 144 mg/dL"
       },
       "diagnosis": {
+        "primary": "Severe NPDR",
+        "confidence": 0.8690937082330173,
+        "icd10": "E11.3493"
+      },
+      "chain_of_thought": {
+        "reasoning_steps": [
+          {
+            "step": 1,
+            "action": "Assess image",
+            "observation": "Image observed"
+          }
+        ]
+      },
+      "final_diagnosis": {
         "primary": "Severe NPDR",
         "confidence": 0.8690937082330173,
         "icd10": "E11.3493"
@@ -76,6 +104,20 @@
         "primary": "Severe NPDR",
         "confidence": 0.9221638815140303,
         "icd10": "E11.3493"
+      },
+      "chain_of_thought": {
+        "reasoning_steps": [
+          {
+            "step": 1,
+            "action": "Assess image",
+            "observation": "Image observed"
+          }
+        ]
+      },
+      "final_diagnosis": {
+        "primary": "Severe NPDR",
+        "confidence": 0.9221638815140303,
+        "icd10": "E11.3493"
       }
     },
     {
@@ -100,6 +142,20 @@
         "primary": "PDR",
         "confidence": 0.9700722762099044,
         "icd10": "E11.3494"
+      },
+      "chain_of_thought": {
+        "reasoning_steps": [
+          {
+            "step": 1,
+            "action": "Assess image",
+            "observation": "Image observed"
+          }
+        ]
+      },
+      "final_diagnosis": {
+        "primary": "PDR",
+        "confidence": 0.9700722762099044,
+        "icd10": "E11.3494"
       }
     },
     {
@@ -121,6 +177,20 @@
         "lab_results": "HbA1c: 9.4%, Fasting glucose: 183 mg/dL"
       },
       "diagnosis": {
+        "primary": "No DR",
+        "confidence": 0.9877210957308685,
+        "icd10": "E11.3490"
+      },
+      "chain_of_thought": {
+        "reasoning_steps": [
+          {
+            "step": 1,
+            "action": "Assess image",
+            "observation": "Image observed"
+          }
+        ]
+      },
+      "final_diagnosis": {
         "primary": "No DR",
         "confidence": 0.9877210957308685,
         "icd10": "E11.3490"

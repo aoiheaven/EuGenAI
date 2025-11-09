@@ -38,6 +38,7 @@ ENV/
 
 # Model outputs
 checkpoints/
+checkpoints_*/
 outputs/
 runs/
 logs/

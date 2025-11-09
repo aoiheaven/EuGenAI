@@ -573,6 +573,7 @@ We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guid
 - **[Feature List](FEATURES.md)** - Complete feature documentation
 - **[Roadmap](ROADMAP.md)** - Development plans and timeline
 - **[Data Preparation Guide](docs/DATA_PREPARATION_GUIDE.md)** - How to prepare your medical imaging data
+- **[Training Commands Reference](docs/TRAINING_COMMANDS.md)** - Complete command guide for all training modes
 - **[Remote Training Guide](docs/REMOTE_TRAINING_GUIDE.md)** - Train on cloud GPUs and clusters
 - **[Progressive Training Pipeline](docs/training_pipeline.md)** - Self-supervised & RL training guide
 - **[SSL & RL Implementation](docs/SSL_RL_IMPLEMENTATION.md)** - Technical details

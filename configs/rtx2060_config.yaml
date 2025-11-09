@@ -1,0 +1,81 @@
+# RTX 2060 (6GB) Optimized Configuration
+# Minimal config for quick testing on 6GB GPU
+
+# Model Configuration  
+model:
+  image_encoder_name: "vit_tiny_patch16_224"  # Smallest ViT
+  text_encoder_name: "bert-base-uncased"
+  img_size: 224  # Small for memory
+  hidden_dim: 256  # Reduced
+  num_cot_steps: 3  # Minimal
+  num_heads: 4
+  num_decoder_layers: 2
+  dropout: 0.1
+  num_diagnosis_classes: 5  # DR grades: 0-4
+
+# Dataset Configuration
+dataset:
+  data_root: "."  # Paths in JSON already include data/
+  train_file: "data/quick_test_train.json"
+  val_file: "data/quick_test_val.json"
+  test_file: "data/quick_test_test.json"
+  image_size: 224
+  max_text_length: 256  # Reduced
+  max_cot_steps: 3
+  augment_train: true
+  augment_val: false
+
+# Training Configuration
+training:
+  batch_size: 2  # Small for 6GB
+  num_epochs: 5  # Quick test
+  learning_rate: 0.0001
+  weight_decay: 0.00001
+  warmup_epochs: 1
+  gradient_clip: 1.0
+  
+  # Optimizer
+  optimizer: "adamw"
+  betas: [0.9, 0.999]
+  
+  # Scheduler
+  scheduler: "cosine"
+  min_lr: 0.000001
+  
+  # Loss weights
+  loss_weights:
+    diagnosis: 1.0
+    confidence: 0.5
+    reasoning: 0.3
+
+# Validation Configuration
+validation:
+  val_interval: 1
+  save_best: true
+  metric: "accuracy"
+
+# Logging Configuration
+logging:
+  log_dir: "logs/rtx2060"
+  tensorboard: true
+  wandb: false
+  wandb_project: "eugenai-rtx2060-test"
+  log_interval: 5
+
+# Checkpoint Configuration  
+checkpoint:
+  save_dir: "checkpoints_rtx2060"
+  save_interval: 2
+  keep_last_n: 2
+
+# Hardware Configuration
+hardware:
+  device: "cuda"
+  num_workers: 0  # 0 for debugging, avoids multiprocess issues
+  pin_memory: true
+  mixed_precision: true  # FP16 for memory saving
+
+# Reproducibility
+seed: 42
+
+# Estimated: ~10-15 min, ~4-5GB GPU memory
