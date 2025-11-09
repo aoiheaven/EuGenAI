@@ -1,0 +1,120 @@
+# Quick Test Configuration for EuGenAI
+# Purpose: Fast validation with minimal data and resources
+# Use case: Verify pipeline works before scaling up
+
+model:
+  name: "eugenai_quick_test"
+  
+  # Small image encoder for fast training
+  image_encoder:
+    type: "vit_tiny"  # Smallest ViT variant
+    pretrained: true
+    img_size: 224  # Reduced from 512
+    patch_size: 16
+    embed_dim: 192
+    depth: 12
+    num_heads: 3
+    freeze_backbone: false
+  
+  # Small text encoder
+  text_encoder:
+    type: "bert-base-uncased"
+    pretrained: true
+    hidden_size: 768
+    num_hidden_layers: 6  # Reduced from 12
+    freeze_embeddings: false
+  
+  # Fusion and reasoning
+  fusion:
+    hidden_dim: 256  # Reduced from 512
+    num_attention_heads: 4
+    num_layers: 2
+    dropout: 0.1
+  
+  chain_of_thought:
+    max_steps: 4  # Reduced from 8
+    hidden_dim: 256
+    num_layers: 2
+
+dataset:
+  # Quick test with small subset
+  train_file: "data/quick_test_train.json"
+  val_file: "data/quick_test_val.json"
+  test_file: "data/quick_test_test.json"
+  
+  # Small images for speed
+  image_size: 224
+  num_workers: 4
+  pin_memory: true
+  
+  # Data augmentation (light for testing)
+  augmentation:
+    random_flip: true
+    random_rotation: 15
+    color_jitter: 0.2
+    random_crop: false  # Disable for speed
+
+training:
+  # Fast training setup
+  batch_size: 16  # Reduced from 32
+  num_epochs: 10  # Quick test
+  learning_rate: 1e-4
+  weight_decay: 1e-4
+  warmup_epochs: 1
+  
+  # Optimization
+  optimizer: "adamw"
+  scheduler: "cosine"
+  gradient_clip: 1.0
+  mixed_precision: true  # FP16 for speed
+  
+  # Gradient accumulation for small batch size
+  gradient_accumulation_steps: 2
+  
+  # Checkpointing
+  save_every: 2  # Save every 2 epochs
+  eval_every: 1  # Evaluate every epoch
+  checkpoint_dir: "checkpoints_quick_test"
+
+logging:
+  use_wandb: true  # Recommended for remote monitoring
+  wandb_project: "eugenai-quick-test"
+  wandb_entity: null  # Set your wandb username
+  
+  use_tensorboard: true
+  tensorboard_dir: "logs/quick_test"
+  
+  log_every: 10  # Log every 10 steps
+  save_predictions: true
+  save_visualizations: true
+
+validation:
+  # Metrics to track
+  metrics:
+    - "accuracy"
+    - "f1_score"
+    - "precision"
+    - "recall"
+    - "confusion_matrix"
+    - "confidence_calibration"
+  
+  # Save best model based on
+  monitor_metric: "val_accuracy"
+  mode: "max"
+
+# Hardware settings
+hardware:
+  device: "cuda"
+  num_gpus: 1
+  distributed: false
+
+# Quick sanity checks
+sanity_check:
+  enabled: true
+  num_batches: 2  # Run 2 batches before full training
+  
+# Estimated resources
+# GPU Memory: ~6GB
+# Training time: ~30-60 minutes (100 samples)
+# Cost estimate: $0.50-$1.00 (on cloud GPU)
+
