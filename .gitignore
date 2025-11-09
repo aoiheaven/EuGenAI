@@ -62,6 +62,7 @@ config/secrets.yaml
 # Chinese backup documentation (local only, not in remote)
 README_zh.md
 ROADMAP_zh.md
+docs/*_zh.md
 demo_visualizations/*_zh.md
 demo_multi_lesion_visualizations/*_zh.md
 docs/zh/
