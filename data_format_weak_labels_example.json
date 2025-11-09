@@ -1,0 +1,145 @@
+{
+  "dataset_info": {
+    "name": "weak_supervised_dataset",
+    "version": "1.0",
+    "description": "Weak supervision dataset - Only diagnosis labels required",
+    "total_samples": 1000,
+    "annotation_level": "diagnosis_only"
+  },
+  "samples": [
+    {
+      "sample_id": "WS_001",
+      "image": {
+        "path": "images/fundus_001.jpg",
+        "modality": "fundus_photography",
+        "eye": "OD"
+      },
+      "medical_record": {
+        "patient_id": "PATIENT_001",
+        "age": 58,
+        "gender": "M",
+        "history": "58-year-old male with type 2 diabetes for 15 years. Vision changes over 6 months.",
+        "physical_exam": "Visual acuity OD 20/40.",
+        "lab_results": "HbA1c: 8.2%"
+      },
+      "diagnosis": {
+        "primary": "Severe NPDR",
+        "icd10": "E11.3491",
+        "confidence": 0.92,
+        "annotator_id": "OPHTH_001"
+      },
+      "notes": "Only diagnosis label is provided. CoT will be auto-generated using GradCAM and attention mechanisms."
+    },
+    {
+      "sample_id": "WS_002",
+      "image": {
+        "path": "images/fundus_002.jpg",
+        "modality": "fundus_photography",
+        "eye": "OS"
+      },
+      "medical_record": {
+        "patient_id": "PATIENT_002",
+        "age": 72,
+        "gender": "F",
+        "history": "72-year-old female with metamorphopsia in left eye for 2 months.",
+        "physical_exam": "Visual acuity OS 20/60.",
+        "lab_results": "Normal labs."
+      },
+      "diagnosis": {
+        "primary": "Intermediate AMD",
+        "secondary": "Drusen present",
+        "icd10": "H35.3120",
+        "confidence": 0.88,
+        "annotator_id": "OPHTH_002"
+      },
+      "notes": "GradCAM will identify drusen locations automatically."
+    },
+    {
+      "sample_id": "WS_003",
+      "image": {
+        "path": "images/fundus_003.jpg",
+        "modality": "fundus_photography",
+        "eye": "OD"
+      },
+      "medical_record": {
+        "patient_id": "PATIENT_003",
+        "age": 45,
+        "gender": "F",
+        "history": "Routine screening, no complaints.",
+        "physical_exam": "Visual acuity OD 20/20.",
+        "lab_results": "BP 145/90 mmHg."
+      },
+      "diagnosis": {
+        "primary": "Normal",
+        "icd10": "Z01.00",
+        "confidence": 0.95,
+        "annotator_id": "OPHTH_001"
+      },
+      "notes": "Normal case for contrast."
+    }
+  ],
+  "usage_notes": {
+    "weak_supervision": {
+      "required_fields": ["image.path", "medical_record", "diagnosis.primary"],
+      "optional_fields": ["diagnosis.secondary", "diagnosis.icd10", "diagnosis.confidence"],
+      "auto_generated": [
+        "chain_of_thought (via GradCAM)",
+        "bounding_boxes (via attention clustering)",
+        "region_descriptions (via attention analysis)"
+      ]
+    },
+    "pseudo_cot_generation": {
+      "method": "GradCAM + Attention Maps",
+      "steps": 5,
+      "quality_filtering": "Confidence threshold 0.7",
+      "description": "System automatically generates 5-step reasoning chains by analyzing which regions the model attends to"
+    },
+    "data_preparation": {
+      "minimum_samples": 500,
+      "recommended_samples": 1000,
+      "annotation_cost": "$5 per diagnosis label (vs $10 for full CoT)",
+      "annotation_time": "30 seconds per sample (vs 5 minutes for CoT)"
+    },
+    "example_auto_generated_cot": {
+      "sample_id": "WS_001",
+      "generated_reasoning": [
+        {
+          "step": 1,
+          "action": "Survey overall fundus",
+          "generated_region": [100, 100, 400, 400],
+          "attention_score": 0.65,
+          "method": "GradCAM layer 11"
+        },
+        {
+          "step": 2,
+          "action": "Focus on optic disc area",
+          "generated_region": [180, 220, 280, 320],
+          "attention_score": 0.72,
+          "method": "Attention clustering"
+        },
+        {
+          "step": 3,
+          "action": "Examine for hemorrhages",
+          "generated_region": [300, 150, 400, 250],
+          "attention_score": 0.89,
+          "method": "High GradCAM activation"
+        },
+        {
+          "step": 4,
+          "action": "Check for microaneurysms",
+          "generated_region": [150, 300, 250, 400],
+          "attention_score": 0.85,
+          "method": "Secondary attention peak"
+        },
+        {
+          "step": 5,
+          "action": "Assess overall severity",
+          "generated_region": [100, 100, 500, 500],
+          "attention_score": 0.91,
+          "method": "Global attention"
+        }
+      ]
+    }
+  }
+}
+

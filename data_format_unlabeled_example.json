@@ -1,0 +1,90 @@
+{
+  "dataset_info": {
+    "name": "unlabeled_ophthalmic_dataset",
+    "version": "1.0",
+    "description": "Self-supervised learning dataset - No labels required",
+    "total_samples": 10000,
+    "modality": ["fundus_photography", "oct"],
+    "annotation_level": "none"
+  },
+  "samples": [
+    {
+      "sample_id": "SSL_001",
+      "image": {
+        "path": "images/fundus_001.jpg",
+        "modality": "fundus_photography",
+        "resolution": [2048, 2048],
+        "eye": "OD",
+        "view": "macula_centered"
+      },
+      "medical_record": {
+        "patient_id": "PATIENT_001",
+        "age": 58,
+        "gender": "M",
+        "history": "58-year-old male with type 2 diabetes mellitus for 15 years. Reports gradual vision changes over past 6 months.",
+        "physical_exam": "Visual acuity OD 20/40, normal intraocular pressure.",
+        "lab_results": "HbA1c: 8.2%, fasting glucose: 156 mg/dL"
+      },
+      "notes": "This sample is used for self-supervised pre-training. No diagnosis or CoT labels are needed."
+    },
+    {
+      "sample_id": "SSL_002",
+      "image": {
+        "path": "images/oct_002.png",
+        "modality": "oct",
+        "scan_type": "macular_cube",
+        "resolution": [512, 496],
+        "eye": "OS"
+      },
+      "medical_record": {
+        "patient_id": "PATIENT_002",
+        "age": 72,
+        "gender": "F",
+        "history": "72-year-old female presenting with metamorphopsia in left eye for 2 months. Family history of AMD.",
+        "physical_exam": "Visual acuity OS 20/60, mild cataract noted.",
+        "lab_results": "No significant abnormalities."
+      },
+      "notes": "OCT scan for contrastive learning with clinical text."
+    },
+    {
+      "sample_id": "SSL_003",
+      "image": {
+        "path": "images/fundus_003.jpg",
+        "modality": "fundus_photography",
+        "resolution": [2048, 2048],
+        "eye": "OD",
+        "view": "wide_field"
+      },
+      "medical_record": {
+        "patient_id": "PATIENT_003",
+        "age": 45,
+        "gender": "F",
+        "history": "45-year-old female with hypertension, routine screening examination.",
+        "physical_exam": "Visual acuity OD 20/20, clear media.",
+        "lab_results": "Blood pressure 145/90 mmHg."
+      },
+      "notes": "Normal case for learning healthy retinal patterns."
+    }
+  ],
+  "usage_notes": {
+    "self_supervised_training": {
+      "required_fields": ["image.path", "medical_record.history", "medical_record.physical_exam"],
+      "optional_fields": ["medical_record.lab_results"],
+      "not_required": ["diagnosis", "chain_of_thought", "segmentation_mask", "bounding_boxes"]
+    },
+    "contrastive_learning": {
+      "description": "Model learns to match images with their clinical descriptions",
+      "augmentation": "Apply strong augmentations (color jitter, rotation, cropping) to create multiple views"
+    },
+    "masked_modeling": {
+      "image_masking": "15% of image patches will be randomly masked for reconstruction",
+      "text_masking": "15% of words in clinical text will be masked for prediction"
+    },
+    "data_preparation": {
+      "minimum_samples": 1000,
+      "recommended_samples": 10000,
+      "text_quality": "Clinical text should be descriptive and medically accurate, but does not need labels"
+    }
+  }
+}
+

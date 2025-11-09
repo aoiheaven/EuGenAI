@@ -182,7 +182,7 @@ ls data/images/
 ## Getting Help
 
 - Check [GitHub Issues](https://github.com/aoiheaven/EuGenAI/issues)
-- Read the detailed [implementation guide](实施方案总结.md)
+- Read the detailed documentation in `README.md` or `README_zh.md`
 - Contact: Via GitHub Issues
 
 ---

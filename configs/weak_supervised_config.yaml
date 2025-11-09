@@ -1,0 +1,134 @@
+# Weak Supervised Learning Configuration
+# Stage 2: Fine-tuning with diagnosis labels only (no CoT)
+
+# Model Configuration
+model:
+  image_encoder_name: "vit_base_patch16_224"
+  text_encoder_name: "bert-base-uncased"
+  img_size: 512
+  hidden_dim: 768
+  num_cot_steps: 10
+  num_heads: 8
+  num_decoder_layers: 3
+  dropout: 0.1
+  num_diagnosis_classes: 100
+  
+  # Load from self-supervised checkpoint
+  load_pretrained_encoders: true
+  pretrained_checkpoint: "checkpoints_self_supervised/best_model.pth"
+  
+  # Weak supervision specific
+  use_gradcam_for_cot: true  # Generate pseudo-CoT using GradCAM
+  use_attention_for_regions: true  # Use attention maps as region proposals
+
+# Dataset Configuration
+dataset:
+  data_root: "data"
+  train_file: "data/train_weak_labels.json"  # Only diagnosis labels required
+  val_file: "data/val_labeled.json"
+  image_size: 512
+  max_text_length: 512
+  
+  # Weak supervision data requirements
+  require_diagnosis: true  # Diagnosis labels required
+  require_cot: false  # CoT annotations NOT required
+  require_segmentation: false
+  
+  # Pseudo-label generation
+  generate_pseudo_cot: true  # Auto-generate CoT from attention
+  generate_pseudo_regions: true  # Auto-generate RoI from saliency
+  
+  augment_train: true
+  augment_val: false
+
+# Training Configuration
+training:
+  batch_size: 8
+  num_epochs: 80
+  learning_rate: 1.0e-4  # Lower LR for fine-tuning
+  weight_decay: 1.0e-5
+  warmup_epochs: 5
+  gradient_clip: 1.0
+  
+  optimizer: "adamw"
+  betas: [0.9, 0.999]
+  
+  scheduler: "cosine"
+  min_lr: 1.0e-7
+  
+  # Weak supervision loss weights
+  loss_weights:
+    diagnosis: 1.0  # Main supervised signal
+    confidence: 0.3  # Confidence estimation
+    attention_consistency: 0.5  # Attention should be consistent
+    pseudo_cot_consistency: 0.2  # Pseudo-CoT consistency
+
+# Weak Supervision Strategy
+weak_supervision:
+  # GradCAM-based pseudo-CoT generation
+  gradcam:
+    enabled: true
+    target_layers: ["encoder.blocks.11"]  # Last ViT block
+    num_steps: 5  # Generate 5-step pseudo-CoT
+    threshold: 0.3  # Attention threshold for region selection
+    
+  # Attention-based region proposals
+  attention_regions:
+    enabled: true
+    method: "clustering"  # 'clustering', 'threshold', or 'topk'
+    num_regions: 5
+    min_area: 0.01  # Minimum region size (1% of image)
+    
+  # Pseudo-label quality filtering
+  quality_filtering:
+    enabled: true
+    confidence_threshold: 0.7  # Only use high-confidence predictions
+    consistency_check: true  # Check multi-crop consistency
+    
+  # Self-training / Pseudo-labeling
+  self_training:
+    enabled: true
+    update_interval: 5  # Update pseudo-labels every N epochs
+    confidence_threshold: 0.8
+
+# Validation Configuration
+validation:
+  val_interval: 2
+  save_best: true
+  metric: "accuracy"
+  compute_attention_metrics: true
+
+# Logging Configuration
+logging:
+  log_dir: "logs_weak_supervised"
+  tensorboard: true
+  wandb: false
+  wandb_project: "eugenai-weak-supervised"
+  log_interval: 10
+  
+  log_pseudo_cot_quality: true
+  visualize_gradcam: true
+  visualize_attention_regions: true
+  num_visualization_samples: 5
+
+# Checkpoint Configuration
+checkpoint:
+  save_dir: "checkpoints_weak_supervised"
+  save_interval: 5
+  keep_last_n: 3
+
+# Hardware Configuration
+hardware:
+  device: "cuda"
+  num_workers: 4
+  pin_memory: true
+  mixed_precision: true
+
+# Reproducibility
+seed: 42
+
+# Notes:
+# - This config is for Stage 2: Weak supervision with diagnosis labels only
+# - Automatically generates pseudo-CoT using GradCAM and attention
+# - After this stage, use reinforcement_learning_config.yaml for Stage 3
+

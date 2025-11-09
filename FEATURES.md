@@ -6,7 +6,7 @@
 
 ---
 
-## 🎯 Core Features (核心功能)
+## 🎯 Core Features
 
 ### Version 1.0 - Basic Edition
 
@@ -49,7 +49,7 @@
 
 ---
 
-## 📊 Data Processing (数据处理)
+## 📊 Data Processing
 
 - ✅ JSON-based data format
 - ✅ Multi-modal data loading (image + text)
@@ -62,7 +62,7 @@
 
 ---
 
-## 🤖 Model Architecture (模型架构)
+## 🤖 Model Architecture
 
 ### Encoders
 - ✅ Vision Transformer (timm models)
@@ -90,7 +90,7 @@
 
 ---
 
-## 🎓 Training System (训练系统)
+## 🎓 Training System
 
 - ✅ Multi-task loss (6 components)
 - ✅ Automatic mixed precision (AMP)
@@ -106,7 +106,7 @@
 
 ---
 
-## 📈 Evaluation Metrics (评估指标)
+## 📈 Evaluation Metrics
 
 ### Classification Metrics
 - ✅ Accuracy
@@ -146,7 +146,7 @@
 
 ---
 
-## 🎨 Visualization Tools (可视化工具)
+## 🎨 Visualization Tools
 
 ### Basic Visualizations
 - ✅ Attention heatmap (3-panel)
@@ -172,7 +172,7 @@
 
 ---
 
-## 🛠️ Utilities (工具函数)
+## 🛠️ Utilities
 
 - ✅ DiagnosisLabelEncoder
 - ✅ TextProcessor
@@ -183,7 +183,7 @@
 
 ---
 
-## 📚 Documentation (文档)
+## 📚 Documentation
 
 ### User Documentation
 - ✅ English README
@@ -206,7 +206,7 @@
 
 ---
 
-## 🔧 Development Tools (开发工具)
+## 🔧 Development Tools
 
 - ✅ Automated setup script (`setup.sh`)
 - ✅ Sanity check script
@@ -217,7 +217,7 @@
 
 ---
 
-## 🚀 Advanced Features (高级功能)
+## 🚀 Advanced Features
 
 ### Multi-Image Support
 - ✅ Load multiple images per sample
@@ -242,7 +242,7 @@
 
 ---
 
-## 📊 Performance Features (性能特性)
+## 📊 Performance Features
 
 - ✅ Mixed precision training (AMP)
 - ✅ Gradient accumulation support
@@ -252,7 +252,7 @@
 
 ---
 
-## 🎯 Quality Assurance (质量保证)
+## 🎯 Quality Assurance
 
 ### Code Quality
 - ✅ 100% English code and comments
@@ -274,7 +274,7 @@
 
 ---
 
-## 🔒 License & Legal (许可证)
+## 🔒 License & Legal
 
 - ✅ Custom restrictive license
 - ✅ Academic use restrictions
@@ -284,7 +284,7 @@
 
 ---
 
-## 📦 Deliverables (交付成果)
+## 📦 Deliverables
 
 ### Code
 - ✅ 9 Python modules
@@ -303,7 +303,7 @@
 
 ---
 
-## 🎓 Use Cases (应用场景)
+## 🎓 Use Cases
 
 ### Supported Medical Imaging
 - ✅ Chest X-ray / CT
@@ -321,7 +321,7 @@
 
 ---
 
-## 🔄 Integration Options (集成选项)
+## 🔄 Integration Options
 
 ### Input Formats
 - ✅ JPEG/PNG images
@@ -337,7 +337,7 @@
 
 ---
 
-## 📞 Support Resources (支持资源)
+## 📞 Support Resources
 
 ### Documentation
 - All features documented
@@ -356,18 +356,18 @@
 
 ---
 
-## ✨ Unique Selling Points (独特优势)
+## ✨ Unique Selling Points
 
-1. **完整性**: 从数据到部署的完整pipeline
-2. **可解释性**: 多层次证明体系
-3. **灵活性**: 基础版+增强版双版本
-4. **实用性**: 面向真实临床场景
-5. **学术性**: 达到发表标准
-6. **文档性**: 详尽的中英文档
+1. **Completeness**: Full pipeline from data to deployment
+2. **Explainability**: Multi-level proof system
+3. **Flexibility**: Dual versions (Basic + Enhanced)
+4. **Practicality**: Designed for real clinical scenarios
+5. **Academic Quality**: Publication-ready standards
+6. **Documentation**: Comprehensive bilingual documentation
 
 ---
 
-## 🎊 Project Status (项目状态)
+## 🎊 Project Status
 
 ### Completed ✅
 - [x] All core features implemented
@@ -390,7 +390,7 @@
 **Version**: 2.0  
 **Status**: ✅ Production Ready
 
-**快速开始**: 阅读 `QUICKSTART.md`  
-**详细文档**: 阅读 `README_zh.md`  
-**新功能**: 阅读 `多病灶功能说明.md`
+**Quick Start**: Read `QUICKSTART.md`  
+**Full Documentation**: Read `README.md` (English) or `README_zh.md` (Chinese)  
+**Multi-Lesion Features**: Check `demo_multi_lesion_visualizations/README.md`
 

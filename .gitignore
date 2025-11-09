@@ -59,3 +59,7 @@ data/processed/
 .env
 config/secrets.yaml
 
+# Chinese backup documentation (excluded from commits)
+*_zh.md
+docs/zh/
+

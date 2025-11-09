@@ -1,0 +1,154 @@
+# Self-Supervised Learning Configuration
+# Stage 1: Pre-training without CoT annotations
+
+# Model Configuration
+model:
+  image_encoder_name: "vit_base_patch16_224"
+  text_encoder_name: "bert-base-uncased"
+  img_size: 512
+  hidden_dim: 768
+  num_cot_steps: 10
+  num_heads: 8
+  num_decoder_layers: 3
+  dropout: 0.1
+  num_diagnosis_classes: 100
+  
+  # Self-supervised specific
+  enable_contrastive_learning: true  # Image-text contrastive learning
+  enable_masked_modeling: true  # Masked region modeling
+  contrastive_temperature: 0.07
+  mask_ratio: 0.15  # Percentage of patches to mask
+
+# Dataset Configuration
+dataset:
+  data_root: "data"
+  train_file: "data/train_unlabeled.json"  # Only needs images + clinical text
+  val_file: "data/val_labeled.json"  # Small labeled set for validation
+  image_size: 512
+  max_text_length: 512
+  
+  # Self-supervised data requirements (minimal)
+  require_diagnosis: false  # Don't require diagnosis labels
+  require_cot: false  # Don't require CoT annotations
+  require_segmentation: false
+  
+  augment_train: true
+  augment_val: false
+  
+  # Strong augmentation for contrastive learning
+  strong_augmentation: true
+  num_augmented_views: 2  # Create 2 views of same image
+
+# Training Configuration
+training:
+  batch_size: 16  # Larger batch for contrastive learning
+  num_epochs: 100
+  learning_rate: 3.0e-4  # Higher LR for pre-training
+  weight_decay: 1.0e-4
+  warmup_epochs: 10
+  gradient_clip: 1.0
+  
+  optimizer: "adamw"
+  betas: [0.9, 0.999]
+  
+  scheduler: "cosine"
+  min_lr: 1.0e-6
+  
+  # Self-supervised loss weights
+  loss_weights:
+    contrastive: 1.0  # Image-text contrastive loss
+    masked_region: 0.8  # Masked region prediction
+    masked_text: 0.5  # Masked language modeling
+    reconstruction: 0.3  # Image reconstruction
+
+# Self-Supervised Tasks
+self_supervised:
+  # Contrastive Learning (CLIP-style)
+  contrastive:
+    enabled: true
+    projection_dim: 256
+    similarity_metric: "cosine"
+    
+  # Masked Image Modeling (MAE-style)
+  masked_image:
+    enabled: true
+    mask_ratio: 0.15
+    mask_strategy: "random"  # 'random', 'block', or 'semantic'
+    reconstruction_target: "pixels"  # 'pixels' or 'features'
+    
+  # Masked Language Modeling (BERT-style)
+  masked_text:
+    enabled: true
+    mask_ratio: 0.15
+    whole_word_masking: true
+
+# Validation Configuration
+validation:
+  val_interval: 5
+  save_best: true
+  metric: "contrastive_accuracy"  # Changed from supervised metrics
+  compute_retrieval_metrics: true  # Image-text retrieval
+
+# Logging Configuration
+logging:
+  log_dir: "logs_self_supervised"
+  tensorboard: true
+  wandb: false
+  wandb_project: "eugenai-self-supervised"
+  log_interval: 20
+  
+  # Log self-supervised specific metrics
+  log_contrastive_similarity: true
+  log_reconstruction_quality: true
+  visualize_masked_predictions: true
+  num_visualization_samples: 8
+
+# Checkpoint Configuration
+checkpoint:
+  save_dir: "checkpoints_self_supervised"
+  save_interval: 10
+  keep_last_n: 5
+  save_encoder_only: true  # Save only encoders for transfer learning
+
+# Hardware Configuration
+hardware:
+  device: "cuda"
+  num_workers: 8  # More workers for data augmentation
+  pin_memory: true
+  mixed_precision: true
+
+# Data Augmentation (Strong)
+augmentation:
+  # Geometric
+  random_crop: true
+  random_flip: true
+  random_rotation: 15
+  
+  # Color
+  color_jitter: true
+  brightness: 0.4
+  contrast: 0.4
+  saturation: 0.4
+  hue: 0.1
+  
+  # Advanced
+  gaussian_blur: true
+  random_erasing: true
+  cutout: true
+  mixup_alpha: 0.2
+
+# Reproducibility
+seed: 42
+
+# Transfer Learning Settings
+transfer:
+  freeze_encoder: false  # Unfreeze for fine-tuning
+  freeze_text_encoder: false
+  load_pretrained_weights: null  # Path to pre-trained weights
+  
+# Notes:
+# - This config is for Stage 1: Self-supervised pre-training
+# - Requires only images + clinical text (no diagnosis or CoT labels)
+# - After pre-training, use weak_supervised_config.yaml for Stage 2
+# - See docs/training_pipeline.md for complete workflow
+
